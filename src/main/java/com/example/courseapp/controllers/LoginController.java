@@ -38,8 +38,7 @@ public class LoginController {
         } else {
             errorLabel.setText("Неверный логин или пароль");
         }
-
-        }
+            }
 
     @FXML
     private void OnReg(ActionEvent event) {

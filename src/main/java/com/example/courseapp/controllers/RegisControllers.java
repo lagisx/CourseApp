@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,13 +19,11 @@ public class RegisControllers {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
 
-    @FXML
-    private void initialize() {
+    @FXML private void initialize() {
         errorLabel.setText("");
     }
 
-    @FXML
-    private void register(ActionEvent event) throws IOException {
+    @FXML private void register(ActionEvent event) throws IOException {
         String login = loginField.getText();
         String phone = phoneField.getText();
         String pass = passwordField.getText();
@@ -54,8 +51,7 @@ public class RegisControllers {
 
     }
 
-    @FXML
-    private void OnLogin(ActionEvent event) {
+    @FXML private void OnLogin(ActionEvent event) {
         try {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
         Scene scene = new Scene(loader.load());

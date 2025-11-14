@@ -1,6 +1,7 @@
 package com.example.courseapp.controllers;
 
 import com.example.courseapp.HelloApplication;
+import com.example.courseapp.models.Cours;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,14 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class UserNamaPanelController {
-    public static final String DB_URL = "jdbc:postgresql://localhost:5432/CourseBD";
-    public static final String DB_USER = "postgres";
-    public static final String DB_PASSWORD = "lagisx";
+    @FXML private FlowPane flowCatalog;
 
 
     private String user;
@@ -26,21 +27,45 @@ public class UserNamaPanelController {
         @FXML private Button btnMyCourses;
         @FXML private Button btnCatalog;
         @FXML private Button btnProfile;
-        @FXML private Button btnSettings;
 
         @FXML private VBox paneMyCourses;
         @FXML private VBox paneCatalog;
         @FXML private VBox paneProfile;
-        @FXML private VBox paneSettings;
 
         @FXML
         private void initialize() {
             btnMyCourses.setOnAction(e -> showPane(paneMyCourses));
             btnCatalog.setOnAction(e -> showPane(paneCatalog));
             btnProfile.setOnAction(e -> showPane(paneProfile));
+
+            loadCourses();
         }
 
-        private void showPane(VBox paneToShow) {
+    @FXML
+    public void loadCourses() {
+        BDControllers db = new BDControllers();
+        flowCatalog.getChildren().clear();
+        for (Cours course : db.getAllCourses()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/courseapp/CourseCard.fxml"));
+                StackPane card = loader.load();
+
+                CourseCardController controller = loader.getController();
+                controller.setData(course.getId(), course.getTitle(), course.getDescription(), course.getLevel());
+
+                controller.getOpenButton().setOnAction(e -> {
+                    System.out.println("Открыт курс: " + controller.getTitleText());
+                });
+
+                flowCatalog.getChildren().add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private void showPane(VBox paneToShow) {
             paneMyCourses.setVisible(false);
             paneCatalog.setVisible(false);
             paneProfile.setVisible(false);
@@ -70,9 +95,7 @@ public class UserNamaPanelController {
         stage.show();
         stage.centerOnScreen();
     }
-
-    @FXML
-    private void logout(ActionEvent event) {
+    @FXML private void logout(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
             Scene scene = new Scene(loader.load());

@@ -1,6 +1,11 @@
 package com.example.courseapp.controllers;
 
+import com.example.courseapp.models.Cours;
+import javafx.fxml.FXML;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BDControllers {
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/CourseBD";
@@ -71,5 +76,35 @@ public class BDControllers {
         } finally {
             disconnect();
         }
+    }
+
+
+
+    public List<Cours> getAllCourses() {
+        List<Cours> courses = new ArrayList<>();
+        String sql = "SELECT * FROM courses";
+
+        try {
+            connect();
+            try (PreparedStatement stmt = connection.prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    courses.add(new Cours(
+                            rs.getInt("id"),
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getString("level")
+                    ));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+        return courses;
     }
 }

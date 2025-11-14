@@ -4,17 +4,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="140" prefWidth="220" style="-fx-background-color: white;                   -fx-background-radius: 16;                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 3);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.courseapp.controllers.CourseCardController">
+<StackPane prefHeight="188.0" prefWidth="220" style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 3);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.courseapp.controllers.CourseCardController">
 
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="140.0" prefWidth="202.0" spacing="10">
+        <VBox alignment="TOP_CENTER" prefHeight="187.0" prefWidth="220.0" spacing="8">
             <padding>
                 <Insets bottom="15" left="15" right="15" top="15" />
             </padding>
 
-            <Label fx:id="title" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="Название курса" wrapText="true" />
-            <Label fx:id="desc" style="-fx-font-size: 12px; -fx-text-fill: #6c7a98;" text="Описание курса" wrapText="true" />
-            <Button fx:id="openBtn" prefWidth="120" style="-fx-background-color: linear-gradient(to right,#4a6bff,#6a8dff);                            -fx-text-fill: white;                            -fx-background-radius: 10;                            -fx-padding: 6 0;" text="Открыть" />
+            <Label fx:id="title" alignment="CENTER" prefHeight="221.0" prefWidth="190.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="Название курса" wrapText="true" />
+            <Label fx:id="desc" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="294.0" prefWidth="190.0" style="-fx-font-size: 12px; -fx-text-fill: #6c7a98;" text="Описание курса" wrapText="true" />
+
+
+            <Label fx:id="levelLabel" prefHeight="11.0" prefWidth="131.0" style="-fx-font-size: 11px; -fx-text-fill: #ffffff; -fx-background-color: #4a6bff; -fx-background-radius: 8; -fx-padding: 2 6;" text="Уровень: Продвинутый" />
+
+            <Button fx:id="openBtn" prefWidth="120" style="-fx-background-color: linear-gradient(to right,#4a6bff,#6a8dff); -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 6 0;" text="Открыть" />
         </VBox>
     </children>
 
