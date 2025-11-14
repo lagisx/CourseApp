@@ -12,6 +12,7 @@ module com.example.courseapp {
     requires com.almasb.fxgl.all;
     requires javafx.graphics;
     requires javafx.base;
+    requires java.sql;
 
     opens com.example.courseapp to javafx.fxml;
     exports com.example.courseapp;

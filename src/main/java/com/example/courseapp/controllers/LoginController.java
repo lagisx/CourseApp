@@ -16,19 +16,14 @@ public class LoginController {
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
-    @FXML private Button authButton;
 
     @FXML
     private void initialize() {
         errorLabel.setText("");
-
-        authButton.setOnAction(event -> {
-                authenticate(event);
-        });
     }
 
-
-    private void authenticate(ActionEvent event) {
+    @FXML
+    private void authenticate(ActionEvent event) throws IOException {
         String login = loginField.getText();
         String pass = passwordField.getText();
 
@@ -36,17 +31,15 @@ public class LoginController {
             errorLabel.setText("Заполните все поля");
             return;
         }
-
-        try {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        BDControllers bd = new BDControllers();
+        if (bd.authenticateUser(login, pass)) {
             UserNamaPanelController.UserPanel(stage, login, pass);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            errorLabel.setText("Ошибка при открытии панели пользователя");
+        } else {
+            errorLabel.setText("Неверный логин или пароль");
         }
-    }
+
+        }
 
     @FXML
     private void OnReg(ActionEvent event) {

@@ -1,7 +1,10 @@
 package com.example.courseapp.controllers;
 
+import com.example.courseapp.HelloApplication;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,6 +13,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class UserNamaPanelController {
+    public static final String DB_URL = "jdbc:postgresql://localhost:5432/CourseBD";
+    public static final String DB_USER = "postgres";
+    public static final String DB_PASSWORD = "lagisx";
+
+
     private String user;
     private String password;
 
@@ -30,7 +38,6 @@ public class UserNamaPanelController {
             btnMyCourses.setOnAction(e -> showPane(paneMyCourses));
             btnCatalog.setOnAction(e -> showPane(paneCatalog));
             btnProfile.setOnAction(e -> showPane(paneProfile));
-            btnSettings.setOnAction(e -> showPane(paneSettings));
         }
 
         private void showPane(VBox paneToShow) {
@@ -41,11 +48,11 @@ public class UserNamaPanelController {
             paneToShow.setVisible(true);
         }
 
-        public void setNameUser(String user) {
+        private void setNameUser(String user) {
             welcomeLabel.setText("Добро пожаловать, " + user + "!");
         }
 
-    public void setPassUsername(String user, String password) {
+    private void setPassUsername(String user, String password) {
         this.user = user;
         this.password = password;
     }
@@ -62,5 +69,19 @@ public class UserNamaPanelController {
         stage.setScene(userScene);
         stage.show();
         stage.centerOnScreen();
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Login.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Авторизация");
+            stage.centerOnScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

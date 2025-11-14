@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.*?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="480.0" prefWidth="360.0" style="-fx-background-color: linear-gradient(to bottom,#eef2f7,#ffffff);" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.courseapp.controllers.LoginController">
+<AnchorPane prefHeight="480.0" prefWidth="360.0" style="-fx-background-color: linear-gradient(to bottom,#eef2f7,#ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.courseapp.controllers.LoginController">
 
     <children>
-        <VBox alignment="CENTER" spacing="22" layoutX="40" layoutY="40" prefWidth="280">
+        <VBox alignment="CENTER" layoutX="40" layoutY="40" prefWidth="280" spacing="22">
 
-            <Label text="COURSES" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a; -fx-letter-spacing: 2px;" />
-            <Label text="Вход в аккаунт" style="-fx-font-size: 16px; -fx-text-fill: #6c7a98;" />
+            <Label style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a; -fx-letter-spacing: 2px;" text="COURSES" />
+            <Label style="-fx-font-size: 16px; -fx-text-fill: #6c7a98;" text="Вход в аккаунт" />
 
-            <VBox spacing="16" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 16, 0, 0, 4);">
+            <VBox alignment="CENTER" spacing="16" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 16, 0, 0, 4);">
 
-                <TextField fx:id="loginField" promptText="Логин" prefWidth="220"
-                           style="-fx-background-color: #f7f9fc; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e1e6ef; -fx-padding: 10;" />
+                <TextField fx:id="loginField" prefWidth="220" promptText="Логин" style="-fx-background-color: #f7f9fc; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e1e6ef; -fx-padding: 10;" />
 
-                <PasswordField fx:id="passwordField" promptText="Пароль" prefWidth="220"
-                               style="-fx-background-color: #f7f9fc; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e1e6ef; -fx-padding: 10;" />
+                <PasswordField fx:id="passwordField" prefWidth="220" promptText="Пароль" style="-fx-background-color: #f7f9fc; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e1e6ef; -fx-padding: 10;" />
 
-                <Button fx:id="authButton" text="Войти" prefWidth="220"
-                        style="-fx-background-color: linear-gradient(to right,#4a6bff,#6a8dff); -fx-text-fill: white; -fx-font-size: 14; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0, 0, 3);" />
-                <Label fx:id="errorLabel" text="" style="-fx-text-fill: #d9534f; -fx-font-size: 12px;" />
+                <Button fx:id="authButton" onAction="#authenticate" prefWidth="220" style="-fx-background-color: linear-gradient(to right,#4a6bff,#6a8dff); -fx-text-fill: white; -fx-font-size: 14; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0, 0, 3);" text="Войти" />
+                <Label fx:id="errorLabel" style="-fx-text-fill: #d9534f; -fx-font-size: 12px;" text="" />
 
             </VBox>
-            <Hyperlink text="Создать аккаунт" style="-fx-text-fill: #5065c9; -fx-font-size: 13px;" onAction="#OnReg" />
+            <Hyperlink onAction="#OnReg" style="-fx-text-fill: #5065c9; -fx-font-size: 13px;" text="Создать аккаунт" />
 
         </VBox>
     </children>
