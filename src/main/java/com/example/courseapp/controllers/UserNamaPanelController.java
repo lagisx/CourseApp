@@ -34,30 +34,63 @@ public class UserNamaPanelController {
 
         @FXML
         private void initialize() {
-            btnMyCourses.setOnAction(e -> showPane(paneMyCourses));
-            btnCatalog.setOnAction(e -> showPane(paneCatalog));
-            btnProfile.setOnAction(e -> showPane(paneProfile));
 
-            loadCourses();
+            btnMyCourses.setOnAction(e -> {
+                showPane(paneMyCourses);
+                loadMyCourses();
+            });
+            btnCatalog.setOnAction(e -> {
+                showPane(paneCatalog);
+                loadCatalog();
+            });
+            btnProfile.setOnAction(e -> showPane(paneProfile));
         }
 
-    @FXML
-    public void loadCourses() {
+    public void loadCatalog() {
         BDControllers db = new BDControllers();
         flowCatalog.getChildren().clear();
+
         for (Cours course : db.getAllCourses()) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/courseapp/CourseCard.fxml"));
                 StackPane card = loader.load();
 
                 CourseCardController controller = loader.getController();
-                controller.setData(course.getId(), course.getTitle(), course.getDescription(), course.getLevel());
+                controller.setData(course.getId(), course.getTitle(), course.getDescription(), course.getLevel(), "catalog");
 
-                controller.getOpenButton().setOnAction(e -> {
-                    System.out.println("Открыт курс: " + controller.getTitleText());
+                controller.getActionButton().setText("Добавить");
+                controller.getActionButton().setOnAction(e -> {
+                    db.addCourseToUser(course.getId(), user);
+                    loadMyCourses();
                 });
 
                 flowCatalog.getChildren().add(card);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    public void loadMyCourses() {
+        BDControllers db = new BDControllers();
+        paneMyCourses.getChildren().clear();
+
+        for (Cours course : db.getMyCourses(user)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/courseapp/CourseCard.fxml"));
+                StackPane card = loader.load();
+
+                CourseCardController controller = loader.getController();
+                controller.setData(course.getId(), course.getTitle(), course.getDescription(), course.getLevel(), "mycourses");
+
+                controller.getActionButton().setText("Удалить");
+                controller.getActionButton().setOnAction(e -> {
+                    db.removeCourseFromUser(course.getId(), user);
+                    loadMyCourses();
+                });
+
+                paneMyCourses.getChildren().add(card);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -80,6 +113,9 @@ public class UserNamaPanelController {
     private void setPassUsername(String user, String password) {
         this.user = user;
         this.password = password;
+
+        loadMyCourses();
+        loadCatalog();
     }
 
     public static void UserPanel(Stage stage, String user, String password) throws IOException {
@@ -94,6 +130,7 @@ public class UserNamaPanelController {
         stage.setScene(userScene);
         stage.show();
         stage.centerOnScreen();
+
     }
     @FXML private void logout(ActionEvent event) {
         try {

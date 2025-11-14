@@ -77,18 +77,12 @@ public class BDControllers {
             disconnect();
         }
     }
-
-
-
-    public List<Cours> getAllCourses() {
-        List<Cours> courses = new ArrayList<>();
-        String sql = "SELECT * FROM courses";
-
-        try {
-            connect();
-            try (PreparedStatement stmt = connection.prepareStatement(sql);
-                 ResultSet rs = stmt.executeQuery()) {
-
+        public List<Cours> getAllCourses() {
+            List<Cours> courses = new ArrayList<>();
+            String sql = "SELECT id, title, description, level FROM courses";
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     courses.add(new Cours(
                             rs.getInt("id"),
@@ -97,14 +91,62 @@ public class BDControllers {
                             rs.getString("level")
                     ));
                 }
-
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
+            return courses;
         }
 
-        return courses;
+        public List<Cours> getMyCourses(String username) {
+            List<Cours> courses = new ArrayList<>();
+            String sql = "SELECT c.id, c.title, c.description, c.level " +
+                    "FROM courses c " +
+                    "JOIN user_courses uc ON c.id = uc.course_id " +
+                    "JOIN users u ON uc.user_id = u.id " +
+                    "WHERE u.username = ?";
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    courses.add(new Cours(
+                            rs.getInt("id"),
+                            rs.getString("title"),
+                            rs.getString("description"),
+                            rs.getString("level")
+                    ));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return courses;
+        }
+
+        public void addCourseToUser(int courseId, String username) {
+            String sql = "INSERT INTO user_courses(user_id, course_id) " +
+                    "SELECT u.id, ? FROM users u WHERE u.username = ? " +
+                    "ON CONFLICT DO NOTHING"; // чтобы не дублировать
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, courseId);
+                stmt.setString(2, username);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void removeCourseFromUser(int courseId, String username) {
+            String sql = "DELETE FROM user_courses " +
+                    "WHERE course_id = ? AND user_id = (SELECT id FROM users WHERE username = ?)";
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, courseId);
+                stmt.setString(2, username);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
-}
+
