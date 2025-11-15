@@ -11,7 +11,7 @@ import java.util.List;
 public class BDControllers {
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/CourseBD";
     public static final String DB_USER = "postgres";
-    public static final String DB_PASSWORD = "lagisx";
+    public static final String DB_PASSWORD = ""; //ИЗМЕНИ ПАРОЛЬ НА СВОЙ, КОГДА ТЫ ЗАХОДИШЬ В POSTGRESQL
     private Connection connection;
 
     public void connect() throws SQLException {
