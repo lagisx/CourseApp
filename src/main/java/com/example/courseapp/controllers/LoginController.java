@@ -33,6 +33,12 @@ public class LoginController {
             errorLabel.setText("Заполните все поля");
             return;
         }
+
+        if (pass.length() < 5 || pass.length() > 10 ) {
+            errorLabel.setText("Неверный логин или пароль");
+            return;
+        }
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         BDControllers bd = new BDControllers();
         if (!login.equals(BDControllers.DB_USER)) {

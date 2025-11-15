@@ -8,8 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.swing.JOptionPane.showMessageDialog;
-
 public class BDControllers {
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/CourseBD";
     public static final String DB_USER = "postgres";
@@ -21,6 +19,10 @@ public class BDControllers {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         }
     }
+    public Connection getConnection() {
+        return connection;
+    }
+
     public void disconnect() {
         try {
             if (connection != null && !connection.isClosed()) {
@@ -162,5 +164,6 @@ public class BDControllers {
                 e.printStackTrace();
             }
         }
+
     }
 

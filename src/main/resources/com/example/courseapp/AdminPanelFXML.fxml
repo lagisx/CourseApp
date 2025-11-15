@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.courseapp.controllers.AdminPanelController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: linear-gradient(to bottom,#eef2f7,#ffffff);"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.courseapp.controllers.AdminPanelController">
 
+    <children>
+
+        <VBox fillWidth="true" prefWidth="230" spacing="20"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 0 20 20 0;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 20, 0, 0, 0);">
+
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="191.0"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;"
+                   text="ADMIN PANEL"/>
+            <Separator/>
+
+            <Button fx:id="btnManageCourses"
+                    style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;"
+                    text="Управление курсами"/>
+            <Button fx:id="btnManageUsers"
+                    style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;"
+                    text="Управление пользователями"/>
+
+            <Pane prefHeight="300"/>
+            <Button onAction="#logout" prefWidth="200.0"
+                    style="-fx-background-color: #ff6262; -fx-text-fill: white; -fx-font-size: 14px;
+                           -fx-background-radius: 10; -fx-padding: 10;"
+                    text="Выйти"/>
+
+        </VBox>
+
+        <StackPane fx:id="contentPane" layoutX="260" layoutY="40" prefHeight="560" prefWidth="600">
+
+            <VBox fx:id="paneCourses" spacing="20" style="-fx-padding: 20;" visible="true">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;"
+                       text="Управление курсами"/>
+                <Button fx:id="btnAddCourse"
+                        style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;"
+                        text="Добавить новый курс"/>
+
+                <ScrollPane fitToWidth="true" prefHeight="400" style="-fx-background-color: transparent;">
+                    <content>
+                        <FlowPane fx:id="flowCourses" hgap="15" vgap="15">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                        </FlowPane>
+                    </content>
+                </ScrollPane>
+            </VBox>
+
+            <VBox fx:id="paneUsers" spacing="20" style="-fx-padding: 20;" visible="false">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;"
+                       text="Управление пользователями"/>
+
+                <ScrollPane fitToWidth="true" prefHeight="400" style="-fx-background-color: transparent;">
+                    <content>
+                        <FlowPane fx:id="flowUsers" hgap="15" vgap="15">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                        </FlowPane>
+                    </content>
+                </ScrollPane>
+            </VBox>
+
+        </StackPane>
+
+    </children>
 </AnchorPane>

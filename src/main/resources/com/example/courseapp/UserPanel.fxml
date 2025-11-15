@@ -2,51 +2,126 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom,#eef2f7,#ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.courseapp.controllers.UserNamaPanelController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: linear-gradient(to bottom,#eef2f7,#ffffff);"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.courseapp.controllers.UserNamaPanelController">
 
     <children>
 
-        <!-- Левое меню -->
-        <VBox fillWidth="true" prefWidth="230" spacing="20" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 0 20 20 0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 20, 0, 0, 0);">
+        <!-- Боковое меню -->
+        <VBox fillWidth="true" prefWidth="230" spacing="20"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 0 20 20 0;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 20, 0, 0, 0);">
 
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="191.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="COURSES" />
-            <Separator />
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="191.0"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;"
+                   text="COURSES"/>
+            <Separator/>
 
-            <Button fx:id="btnMyCourses" prefWidth="180" style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;" text="Мои курсы" />
-            <Button fx:id="btnCatalog" prefWidth="180" style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;" text="Каталог" />
-            <Button fx:id="btnProfile" prefWidth="180" style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;" text="Профиль" />
+            <Button fx:id="btnMyCourses" prefWidth="180"
+                    style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;"
+                    text="Мои курсы"/>
+            <Button fx:id="btnCatalog" prefWidth="180"
+                    style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;"
+                    text="Каталог"/>
+            <Button fx:id="btnProfile" prefWidth="180"
+                    style="-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: #6c7a98; -fx-padding: 8 0;"
+                    text="Профиль"/>
 
-            <Pane prefHeight="300" />
-
-            <Button onAction="#logout" prefWidth="180" style="-fx-background-color: #ff6262; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 10;" text="Выйти" />
+            <Pane prefHeight="300"/>
+            <Button onAction="#logout" prefWidth="180"
+                    style="-fx-background-color: #ff6262; -fx-text-fill: white; -fx-font-size: 14px;
+                           -fx-background-radius: 10; -fx-padding: 10;"
+                    text="Выйти"/>
 
         </VBox>
 
-        <!-- Основная область -->
+        <!-- Контент -->
         <StackPane fx:id="contentPane" layoutX="260" layoutY="40" prefHeight="560" prefWidth="600">
 
             <!-- Мои курсы -->
             <VBox fx:id="paneMyCourses" spacing="25" visible="true">
-                <Label fx:id="welcomeLabel" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="Добро пожаловать!" />
-                <Label style="-fx-font-size: 16px; -fx-text-fill: #6c7a98;" text="Ваши активные курсы" />
+                <Label fx:id="welcomeLabel"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;"
+                       text="Добро пожаловать!"/>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: #6c7a98;" text="Ваши активные курсы"/>
 
-                <!-- Можно оставить HBox или FlowPane -->
-                <FlowPane fx:id="flowMyCourses" hgap="20" vgap="20" />
+                <ScrollPane fitToWidth="true" prefHeight="400" style="-fx-background-color: transparent;">
+                    <content>
+                        <FlowPane fx:id="flowMyCourses" hgap="20" vgap="20">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                        </FlowPane>
+                    </content>
+                </ScrollPane>
             </VBox>
 
-            <!-- Каталог -->
+            <!-- Каталог курсов -->
             <VBox fx:id="paneCatalog" spacing="25" visible="false">
-                <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="Каталог курсов" />
-                <Label style="-fx-font-size: 16px; -fx-text-fill: #6c7a98;" text="Все доступные курсы" />
+                <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="Каталог курсов"/>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: #6c7a98;" text="Все доступные курсы"/>
 
-                <!-- FlowPane для карточек -->
-                <FlowPane fx:id="flowCatalog" hgap="20" vgap="20" />
+                <ScrollPane fitToWidth="true" prefHeight="400" style="-fx-background-color: transparent;">
+                    <content>
+                        <FlowPane fx:id="flowCatalog" hgap="20" vgap="20">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                        </FlowPane>
+                    </content>
+                </ScrollPane>
             </VBox>
 
             <!-- Профиль -->
-            <VBox fx:id="paneProfile" spacing="25" visible="false">
-                <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1f2d5a;" text="Профиль пользователя" />
+            <VBox fx:id="paneProfile" spacing="20" visible="false"
+                  style="-fx-padding: 30;
+                         -fx-background-color: #ffffff;
+                         -fx-background-radius: 15;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 15, 0, 0, 5);">
+
+                <Label text="Профиль пользователя"
+                       style="-fx-font-size: 26px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #2C3E50;"/>
+
+                <GridPane hgap="15" vgap="15">
+                    <Label text="Логин:" style="-fx-font-weight: bold; -fx-text-fill: #34495E;"/>
+                    <TextField fx:id="tfUsername" promptText="Введите логин" GridPane.columnIndex="1"
+                               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #BDC3C7; -fx-padding: 8;"/>
+
+                    <Label text="Пароль:" GridPane.rowIndex="1"
+                           style="-fx-font-weight: bold; -fx-text-fill: #34495E;"/>
+                    <PasswordField fx:id="tfPassword" promptText="Введите пароль" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="1"
+                                   style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #BDC3C7; -fx-padding: 8;"/>
+
+                    <Label text="Телефон:" GridPane.rowIndex="2"
+                           style="-fx-font-weight: bold; -fx-text-fill: #34495E;"/>
+                    <TextField fx:id="tfPhone" promptText="Введите телефон" GridPane.columnIndex="1"
+                               GridPane.rowIndex="2"
+                               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #BDC3C7; -fx-padding: 8;"/>
+                </GridPane>
+
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <Button fx:id="btnSaveChanges" text="Сохранить изменения"
+                            style="-fx-background-color: #3498DB;
+                                   -fx-text-fill: white;
+                                   -fx-font-weight: bold;
+                                   -fx-background-radius: 10;
+                                   -fx-padding: 10 20;"/>
+                    <Button fx:id="btnDeleteAccount" text="Удалить аккаунт"
+                            style="-fx-background-color: #E74C3C;
+                                   -fx-text-fill: white;
+                                   -fx-font-weight: bold;
+                                   -fx-background-radius: 10;
+                                   -fx-padding: 10 20;"/>
+                </HBox>
+
             </VBox>
 
         </StackPane>

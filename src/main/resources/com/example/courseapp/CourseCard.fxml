@@ -8,7 +8,6 @@
 
     <children>
 
-        <!-- Содержимое карточки -->
         <VBox alignment="TOP_CENTER" prefHeight="187.0" prefWidth="220.0" spacing="8">
             <padding>
                 <Insets bottom="15" left="15" right="15" top="15" />
@@ -22,11 +21,9 @@
 
             <Button fx:id="openBtn" prefWidth="120" style="-fx-background-color: linear-gradient(to right,#4a6bff,#6a8dff); -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 6 0;" text="Открыть" />
         </VBox>
-        <!-- Кнопка удаления -->
         <Button fx:id="deleteBtn" style="-fx-background-color: transparent; -fx-text-fill: #d9534f; -fx-font-size: 16;" text="✖" visible="false" StackPane.alignment="TOP_RIGHT" />
     </children>
 
-    <!-- Выравнивание кнопки удаления в правом верхнем углу -->
     <StackPane.alignment>
         <Pos fx:constant="TOP_RIGHT" />
     </StackPane.alignment>
