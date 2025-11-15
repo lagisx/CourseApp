@@ -84,11 +84,14 @@ public class UserNamaPanelController {
                 CourseCardController controller = loader.getController();
                 controller.setData(course.getId(), course.getTitle(), course.getDescription(), course.getLevel(), "mycourses");
 
-                controller.getActionButton().setText("Удалить");
-                controller.getActionButton().setOnAction(e -> {
+                controller.getActionButton().setText("Открыть");
+                controller.getActionButton().setOnAction(e -> controller.openCourseWindow());
+
+                controller.getDeleteBtn().setOnAction(e -> {
                     db.removeCourseFromUser(course.getId(), user);
                     loadMyCourses();
                 });
+
 
                 paneMyCourses.getChildren().add(card);
             } catch (IOException e) {

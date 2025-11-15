@@ -1,11 +1,14 @@
 package com.example.courseapp.controllers;
 
 import com.example.courseapp.models.Cours;
-import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class BDControllers {
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/CourseBD";
@@ -122,19 +125,30 @@ public class BDControllers {
             return courses;
         }
 
-        public void addCourseToUser(int courseId, String username) {
-            String sql = "INSERT INTO user_courses(user_id, course_id) " +
-                    "SELECT u.id, ? FROM users u WHERE u.username = ? " +
-                    "ON CONFLICT DO NOTHING"; // чтобы не дублировать
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, courseId);
-                stmt.setString(2, username);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
+    public void addCourseToUser(int courseId, String username) {
+        String sql = "INSERT INTO user_courses(user_id, course_id) " +
+                "SELECT u.id, ? FROM users u WHERE u.username = ? " +
+                "ON CONFLICT (user_id, course_id) DO NOTHING";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, courseId);
+            stmt.setString(2, username);
+            int updatedRows = stmt.executeUpdate();
+
+
+            if (updatedRows == 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Курс уже добавлен");
+                alert.setHeaderText(null);
+                alert.setContentText("Вы уже добавили этот курс!");
+                alert.showAndWait();
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
         public void removeCourseFromUser(int courseId, String username) {
             String sql = "DELETE FROM user_courses " +

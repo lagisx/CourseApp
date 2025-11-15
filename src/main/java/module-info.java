@@ -13,6 +13,7 @@ module com.example.courseapp {
     requires javafx.graphics;
     requires javafx.base;
     requires java.sql;
+    requires java.desktop;
 
     opens com.example.courseapp to javafx.fxml;
     exports com.example.courseapp;

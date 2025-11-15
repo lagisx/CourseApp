@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class LoginController {
 
@@ -33,12 +35,23 @@ public class LoginController {
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         BDControllers bd = new BDControllers();
-        if (bd.authenticateUser(login, pass)) {
-            UserNamaPanelController.UserPanel(stage, login, pass);
-        } else {
-            errorLabel.setText("Неверный логин или пароль");
-        }
+        if (!login.equals(BDControllers.DB_USER)) {
+            if (bd.authenticateUser(login, pass)) {
+                UserNamaPanelController.UserPanel(stage, login, pass);
+            } else {
+                errorLabel.setText("Неверный логин или пароль");
             }
+        } else {
+            try(Connection con = DriverManager.getConnection(BDControllers.DB_URL, login, pass)) {
+                Stage adminstage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                AdminPanelController.AdminPanel(adminstage, login, pass);
+            } catch(Exception e) {
+                errorLabel.setText("Неверный логин или пароль");
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     @FXML
     private void OnReg(ActionEvent event) {
